@@ -53,8 +53,9 @@
 (defface cisco-router-toplevel-face
   '(
     (((type tty) (class color)) (:foreground "blue"))
-    (((type graphic) (class color)) (:foreground "lightsteelblue"))
-    (t (:foreground "lightsteelblue" ))
+;;    (((type graphic) (class color)) (:foreground "lightsteelblue"))
+    (((type graphic) (class color)) (:foreground "blue"))
+    (t (:foreground "blue" ))
     )
   "Face for basic router commands")
 
@@ -151,7 +152,7 @@
   (set (make-local-variable 'imenu-generic-expression) cisco-router-imenu-expression)
   (imenu-add-to-menubar "Imenu")
   (setq major-mode 'cisco-router-mode
-	mode-name "Cisco router configuration")
+	mode-name "Cisco IOS configuration")
   (run-hooks cisco-router-mode-hook))
 
 (add-to-list 'auto-mode-alist '("\\.cfg\\'" . cisco-router-mode))

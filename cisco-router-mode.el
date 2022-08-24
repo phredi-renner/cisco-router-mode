@@ -54,14 +54,14 @@
 (defface cisco-router-toplevel-face
   '(
     (((type tty) (class color)) (:foreground "blue"))
-;;    (((type graphic) (class color)) (:foreground "lightsteelblue"))
-    (((type graphic) (class color)) (:foreground "blue"))
+    (((type graphic) (class color)) (:foreground "lightsteelblue"))
     (t (:foreground "blue" ))
     )
   "Face for basic router commands")
 
 (defface cisco-router-no-face
   '(
+    (((type graphic) (class color)) (:foreground "red"))
     (t (:underline t))
     )
   "Face for \"no\"")
@@ -73,8 +73,8 @@
 (defconst cisco-router-font-lock-keywords
   (list
    '( "\\<\\(access-list\\|c\\(?:lass-map\\|ontroller\\)\\|i\\(?:nterface\\|p vrf\\)\\|line\\|policy-map\\|r\\(?:edundancy\\|oute\\(?:-map\\|r\\)\\)\\)\\>". cisco-router-toplevel-face)
-   '( "\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>" . cisco-router-command-face)
-   '("\\<\\(no\\)\\>" . cisco-router-no-face)
+   '( "\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>" . cisco-router-command-face)
+   '("\\<\\(no\\|shutdown\\)\\>" . cisco-router-no-face)
    '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>" . cisco-router-ipadd-face)
    )
   "Font locking definitions for cisco router mode")

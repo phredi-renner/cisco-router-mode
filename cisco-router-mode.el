@@ -34,6 +34,7 @@
 (defvar cisco-router-toplevel-face 'cisco-router-toplevel-face "Face for top level commands")
 (defvar cisco-router-no-face 'cisco-router-no-face "Face for \"no\"")
 (defvar cisco-router-ipadd-face 'cisco-router-ipadd-face "Face for IP addresses")
+(defvar cisco-router-interface-face 'cisco-router-interface-face "Face for Interface Names")
 
 (defface cisco-router-ipadd-face
   '(
@@ -66,7 +67,14 @@
     )
   "Face for \"no\"")
 
-
+(defface cisco-router-interface-face
+  '(
+    (((type tty) (class color)) (:foreground "blue"))
+    (((type graphic) (class color)) (:foreground "lightsteelblue"))
+    (t (:foreground "blue" ))
+    )
+  "Face for interface names"
+  
 ;; (regexp-opt '("interface" "ip vrf" "controller" "class-map" "redundancy" "line" "policy-map" "router" "access-list" "route-map") t)
 ;; (regexp-opt '("diagnostic" "hostname" "logging" "service" "alias" "snmp-server" "boot" "card" "vtp" "version" "enable") t)
 
@@ -76,7 +84,8 @@
    '( "\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>" . cisco-router-command-face)
    '("\\<\\(no\\|shutdown\\)\\>" . cisco-router-no-face)
    '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>" . cisco-router-ipadd-face)
-   )
+   '( "\\<\\((Hu(ndredGigabit)?\\|Fo(rtyGigabit)?\\|Te(nGigabit)?\\|Gi(gabit)?i\\|Fa(st)?)(Ethernet)?)i\\|Eth\\|Se(rial)?\\|Lo(opback)?\\|Tu(nnel)?\\|VL(AN)?\\|Po(rt-channel)?\\|Vi(rtual\-(Template|Access))?\\|Mu(ltilink)?\\|Di(aler)?\\|[BN]VI)(\d+/){,2}\d+(\.\d+)\\>" . cisco-router-interface-face
+  )
   "Font locking definitions for cisco router mode")
 
 ;; Imenu definitions. 

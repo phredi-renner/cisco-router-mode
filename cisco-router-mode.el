@@ -17,7 +17,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-;; UPdated by Fred Renner 2022
+;; Updated by Fred Renner 2022
 
 (defvar cisco-router-mode-hook nil
   "Hook called by \"cisco-router-mode\"")
@@ -29,13 +29,16 @@
     cisco-router-mode-map)
   "Keymap for Cisco router configuration major mode")
 
-;; Font locking definitions. 
+;; Font locking definitions.
+;; These define the variables used for different font coding.
 (defvar cisco-router-command-face 'cisco-router-command-face "Face for basic router commands")
 (defvar cisco-router-toplevel-face 'cisco-router-toplevel-face "Face for top level commands")
 (defvar cisco-router-no-face 'cisco-router-no-face "Face for \"no\"")
 (defvar cisco-router-ipadd-face 'cisco-router-ipadd-face "Face for IP addresses")
 (defvar cisco-router-interface-face 'cisco-router-interface-face "Face for Interface Names")
 
+;; From here we are setting the look for each of the above defined Face variables.
+;; I don't know where the color listing comes from.
 (defface cisco-router-ipadd-face
   '(
     (((type tty) (class color)) (:foreground "yellow"))
@@ -78,6 +81,7 @@
 ;; (regexp-opt '("interface" "ip vrf" "controller" "class-map" "redundancy" "line" "policy-map" "router" "access-list" "route-map") t)
 ;; (regexp-opt '("diagnostic" "hostname" "logging" "service" "alias" "snmp-server" "boot" "card" "vtp" "version" "enable") t)
 
+;; This section does the regex to assign above fases to keywords
 (defconst cisco-router-font-lock-keywords
   (list
    '( "\\<\\(access-list\\|c\\(?:lass-map\\|ontroller\\)\\|i\\(?:nterface\\|p vrf\\)\\|line\\|policy-map\\|r\\(?:edundancy\\|oute\\(?:-map\\|r\\)\\)\\)\\>". cisco-router-toplevel-face)
@@ -89,6 +93,7 @@
   "Font locking definitions for cisco router mode")
 
 ;; Imenu definitions. 
+;; Not sure what this is doing.
 (defvar cisco-router-imenu-expression
   '(
     ("Interfaces"        "^[\t ]*interface *\\(.*\\)" 1)
@@ -100,6 +105,7 @@
     ))
   
 ;; Indentation definitions.
+;; This part seems good. I don't think I will make any changes here.
 (defun cisco-router-indent-line ()
   "Indent current line as cisco router config line"
   (let ((indent0 "^interface\\|redundancy\\|^line\\|^ip vrf \\|^controller\\|^class-map\\|^policy-map\\|router\\|access-list\\|route-map")

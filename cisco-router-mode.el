@@ -35,6 +35,7 @@
 (defvar cisco-router-toplevel-face 'cisco-router-toplevel-face "Face for top level commands")
 (defvar cisco-router-no-face 'cisco-router-no-face "Face for \"no\"")
 (defvar cisco-router-ipadd-face 'cisco-router-ipadd-face "Face for IP addresses")
+(defvar cisco-router-interface-face 'cisco-router-interface-face "Face for Interface Names")
 
 ;; From here we are setting the look for each of the above defined Face variables.
 ;; I don't know where the color listing comes from.
@@ -69,18 +70,26 @@
     )
   "Face for \"no\"")
 
-
+(defface cisco-router-interface-face
+  '(
+    (((type tty) (class color)) (:foreground "orange"))
+    (((type graphic) (class color)) (:foreground "orange"))
+    (t (:foreground "orange" ))
+    )
+  "Face for interface names")
+  
 ;; (regexp-opt '("interface" "ip vrf" "controller" "class-map" "redundancy" "line" "policy-map" "router" "access-list" "route-map") t)
 ;; (regexp-opt '("diagnostic" "hostname" "logging" "service" "alias" "snmp-server" "boot" "card" "vtp" "version" "enable") t)
 
-;; This section does the regex to assign above fases to keywords
+;; This section does the regex to assign above faces to keywords
 (defconst cisco-router-font-lock-keywords
   (list
    '( "\\<\\(access-list\\|c\\(?:lass-map\\|ontroller\\)\\|i\\(?:nterface\\|p vrf\\)\\|line\\|policy-map\\|r\\(?:edundancy\\|oute\\(?:-map\\|r\\)\\)\\)\\>". cisco-router-toplevel-face)
    '( "\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>" . cisco-router-command-face)
    '("\\<\\(no\\|shutdown\\)\\>" . cisco-router-no-face)
    '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>" . cisco-router-ipadd-face)
-   )
+   '("\\<\\([a-zA-Z]*Ethernet.*\\|Vlan.*\\|ae.*\\|[a-zA-Z]*Gigabit.*\\|Loopback.*\\|Tunnel.*\\|Port-Channel.*)\\>" . cisco-router-interface-face)
+  )
   "Font locking definitions for cisco router mode")
 
 ;; Imenu definitions. 

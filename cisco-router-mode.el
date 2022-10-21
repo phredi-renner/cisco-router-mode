@@ -88,7 +88,7 @@
    '( "\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>" . cisco-router-command-face)
    '("\\<\\(no\\|shutdown\\)\\>" . cisco-router-no-face)
    '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>" . cisco-router-ipadd-face)
-   '("\\<\\([a-zA-Z]*Ethernet.*\\|Vlan.*\\|ae.*\\|[a-zA-Z]*Gigabit.*\\|Loopback.*\\|Tunnel.*\\|Port-Channel.*)\\>" . cisco-router-interface-face)
+   '("\\<\\([a-zA-Z]*Ethernet.*\\|Vlan.*\\|ae.*\\|[a-zA-Z]*Gigabit.*\\|Loopback.*\\|Tunnel.*\\|Port-Channel.*\\)\\>" . cisco-router-interface-face)
   )
   "Font locking definitions for cisco router mode")
 

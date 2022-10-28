@@ -3,7 +3,7 @@ Major mode for editing network device configuration files.
 
 I'm going to see if I can create color coding for router/switch configuraiton files as I'm learning to use EMACS.
 
-#My Goals
+# My Goals
  - learn more about using EMACS and eLISP
  - Router, Switch and Firewall configuration highlighting (multi-vendor)
 

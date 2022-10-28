@@ -1,10 +1,25 @@
-# cisco-router-mode
-Major mode for editing Cisco router configuration files
+# cisco-router-mode for EMACS
+Major mode for editing network device configuration files.
 
 I'm going to see if I can create color coding for router/switch configuraiton files as I'm learning to use EMACS.
 
-Goals:
+#My Goals:
  - learn more about using EMACS and eLISP
- - Router, Switch and Firewall configuration highlighting
+ - Router, Switch and Firewall configuration highlighting (multi-vendor)
 
-Using this as a starting point as it's pretty limited in the highlighting but I like the idea of indents and such and that part works.
+I've used previous work by *Noufal Ibrahim* and his [cisco-router-mode](https://www.emacswiki.org/emacs/cisco-router-mode.el) as a starting point and mainly updated some regex for color highlighting for modern interfaces and some other keywords I like to have highlighted.
+
+I also found [comware-router-mode](https://github.com/daviderestivo/comware-router-mode/blob/master/comware-router-mode.el) that started from the same place but adapted to Comware with some interesting ideas of how to do things that I'm looking at as well. All just trying to learn.
+
+# License
+ This file is NOT part of GNU Emacs.
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 3
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.

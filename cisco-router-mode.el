@@ -43,7 +43,8 @@
 ;; I don't know where the color listing comes from.
 (defface cisco-router-ipadd-face
   '(
-    (((type tty) (class color)) (:foreground "yellow"))
+;;    (((type tty) (class color)) (:foreground "yellow"))
+    (((type tty) (class color)) (:foreground "#FFD700"))
 ;;    (((type graphic) (class color)) (:foreground "LightGoldenrod"))
 	(((type graphic) (class color)) (:foreground "#FFD700"))
     (t (:foreground "#FFD700" ))

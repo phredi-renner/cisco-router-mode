@@ -44,8 +44,9 @@
 (defface cisco-router-ipadd-face
   '(
     (((type tty) (class color)) (:foreground "yellow"))
-    (((type graphic) (class color)) (:foreground "LightGoldenrod"))
-    (t (:foreground "LightGoldenrod" ))
+;;    (((type graphic) (class color)) (:foreground "LightGoldenrod"))
+	(((type graphic) (class color)) (:foreground "#FFD700"))
+    (t (:foreground "#FFD700" ))
     )
   "Face for IP addresses")
 

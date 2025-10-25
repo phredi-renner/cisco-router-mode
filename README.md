@@ -3,6 +3,9 @@ Major mode for editing network device configuration files.
 
 I'm going to see if I can create color coding for router/switch configuraiton files as I'm learning to use EMACS.
 
+# 10/25/25 - I just updated to emacs 30 and this doesn't seem to work correctly.
+I need to dig into it and see what's up and make sure it's not something with my overall config or specifically this mode. Basically, the colors highlighting isn't working and the indents dont seem to always work as expected and did before. The two of those are kinda the whole point of this :-(
+
 # My Goals
  - learn more about using EMACS and eLISP
  - Router, Switch and Firewall configuration highlighting (multi-vendor)

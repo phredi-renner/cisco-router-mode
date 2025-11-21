@@ -1,4 +1,5 @@
-;;; -*- lexical-binding: t -*-
+;;; cisco-router-mode -*- lexical-binding: t -*-
+;; -*- lexical-binding: t; -*-
 
 ;;; cisco-router-mode.el --- Major mode for editing Cisco router configuration files
 ;;

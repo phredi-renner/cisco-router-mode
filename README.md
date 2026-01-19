@@ -5,6 +5,7 @@ I'm going to see if I can create color coding for router/switch configuraiton fi
 
 # 10/25/25 - I just updated to emacs 30 and this doesn't seem to work correctly.
 I need to dig into it and see what's up and make sure it's not something with my overall config or specifically this mode. Basically, the colors highlighting isn't working and the indents dont seem to always work as expected and did before. The two of those are kinda the whole point of this :-(
+# 01/18/26 - Ran the code through Perplexity AI with the prompt, "update for EMACS 30", it came back with the below and following recommendations: "For Emacs 30, the main things to update are: use define-derived-mode, make the faces real defface symbols, and set font-lock-defaults with setq-local (or as a defvar-local). The regexps and faces themselves still work."
 
 # My Goals
  - learn more about using EMACS and eLISP

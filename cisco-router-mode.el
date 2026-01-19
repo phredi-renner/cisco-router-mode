@@ -1,183 +1,63 @@
-;;; cisco-router-mode -*- lexical-binding: t -*-
-;; -*- lexical-binding: t; -*-
+;;; cisco-config-mode.el --- Major mode for Cisco router configs -*- lexical-binding: t; -*-
 
-;;; cisco-router-mode.el --- Major mode for editing Cisco router configuration files
-;;
-;; Copyright (C) 2004 Noufal Ibrahim <nkv at hcoop period net>
-;;
-;; This program is not part of Gnu Emacs
-;;
-;; cisco-router-mode.el is free software; you can
-;; redistribute it and/or modify it under the terms of the GNU General
-;; Public License as published by the Free Software Foundation; either
-;; version 2 of the License, or (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; if not, write to the Free Software
-;; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-;; Updated by Fred Renner 2022
+(defgroup cisco-config nil
+  "Major mode for editing Cisco router configuration files."
+  :group 'languages)
 
-(defvar cisco-router-mode-hook nil
-  "Hook called by \"cisco-router-mode\"")
+;; Basic keyword classes
+(defconst cisco-config-font-lock-keywords
+  (let* (
+         ;; Top-level / mode keywords
+         (keywords '("version" "hostname" "enable secret" "enable password"
+                     "service password-encryption"
+                     "ip domain-name" "ip name-server"
+                     "logging" "clock timezone"
+                     "access-list" "ip access-list" "route-map"
+                     "router" "network" "redistribute" "neighbor"
+                     "line" "interface" "vlan" "ip route"
+                     "banner" "username" "aaa" "crypto" "snmp-server"))
 
-(defvar cisco-router-mode-map
-  (let 
-      ((cisco-router-mode-map (make-keymap)))
-    (define-key cisco-router-mode-map "\C-j" 'newline-and-indent)
-    cisco-router-mode-map)
-  "Keymap for Cisco router configuration major mode")
+         ;; Common subcommands
+         (subcmds '("description" "ip address" "no shutdown" "shutdown"
+                    "duplex" "speed" "switchport" "encapsulation"
+                    "service-policy" "ip nat" "ip ospf" "ip pim" "standby"))
 
-;; Font locking definitions.
-;; These define the variables used for different font coding.
-(defvar cisco-router-command-face 'cisco-router-command-face "Face for basic router commands")
-(defvar cisco-router-toplevel-face 'cisco-router-toplevel-face "Face for top level commands")
-(defvar cisco-router-no-face 'cisco-router-no-face "Face for \"no\"")
-(defvar cisco-router-ipadd-face 'cisco-router-ipadd-face "Face for IP addresses")
-(defvar cisco-router-interface-face 'cisco-router-interface-face "Face for Interface Names")
+         ;; Interface name patterns
+         (ifaces '("GigabitEthernet" "FastEthernet" "TenGigabitEthernet"
+                   "Ethernet" "Serial" "Loopback" "Vlan" "Port-channel"))
 
-;; From here we are setting the look for each of the above defined Face variables.
-;; I don't know where the color listing comes from.
-(defface cisco-router-ipadd-face
-  '(
-    (((type tty) (class color)) (:foreground "yellow"))
-    (((type graphic) (class color)) (:foreground "LightGoldenrod"))
-    (t (:foreground "LightGoldenrod" ))
-    )
-  "Face for IP addresses")
+         ;; Build regexps
+         (keywords-regexp (regexp-opt keywords 'words))
+         (subcmds-regexp  (regexp-opt subcmds 'words))
+         (ifaces-regexp   (concat "\\<"
+                                  (regexp-opt ifaces)
+                                  "[0-9./]*\\>")))
+    `(
+      ;; Top-level / mode keywords
+      (,keywords-regexp . font-lock-keyword-face)
+      ;; Subcommands
+      (,subcmds-regexp  . font-lock-builtin-face)
+      ;; Interface names like GigabitEthernet0/1, Loopback0, Vlan10
+      (,ifaces-regexp   . font-lock-variable-name-face)
+      ;; IPv4 addresses
+      ("\\<[0-9]+\\(?:\\.[0-9]+\\)\\{3\\}\\>" . font-lock-constant-face)
+      ;; Access-list numbers
+      ("\\<\\([0-9]\\{1,5\\}\\)\\>" 1 font-lock-constant-face))))
 
-(defface cisco-router-command-face 
-  '(
-    (((type tty) (class color)) (:foreground "cyan"))
-    (((type graphic) (class color)) (:foreground "cyan"))
-    (t (:foreground "cyan" ))
-    )
-  "Face for basic router commands")
+;;;###autoload
+(define-derived-mode cisco-config-mode fundamental-mode "CiscoCfg"
+  "Major mode for editing Cisco router configuration files."
+  :group 'cisco-config
+  (setq font-lock-defaults '(cisco-config-font-lock-keywords))
+  (setq-local comment-start "!")
+  (setq-local comment-start-skip "!+\\s-*"))
 
-(defface cisco-router-toplevel-face
-  '(
-    (((type tty) (class color)) (:foreground "blue"))
-    (((type graphic) (class color)) (:foreground "lightsteelblue"))
-    (t (:foreground "blue" ))
-    )
-  "Face for basic router commands")
+;;;###autoload
+(add-to-list 'auto-mode-alist '("cisco-.*\\.txt\\'" . cisco-config-mode))
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.ios\\'"        . cisco-config-mode))
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.cisco\\'"      . cisco-config-mode))
 
-(defface cisco-router-no-face
-  '(
-    (((type graphic) (class color)) (:foreground "red"))
-    (t (:underline t))
-    )
-  "Face for \"no\"")
-
-(defface cisco-router-interface-face
-  '(
-    (((type tty) (class color)) (:foreground "orange"))
-    (((type graphic) (class color)) (:foreground "orange"))
-    (t (:foreground "orange" ))
-    )
-  "Face for interface names")
-  
-;; (regexp-opt '("interface" "ip vrf" "controller" "class-map" "redundancy" "line" "policy-map" "router" "access-list" "route-map") t)
-;; (regexp-opt '("diagnostic" "hostname" "logging" "service" "alias" "snmp-server" "boot" "card" "vtp" "version" "enable") t)
-
-;; This section does the regex to assign above faces to keywords
-(defconst cisco-router-font-lock-keywords
-  (list
-   '( "\\<\\(access-list\\|c\\(?:lass-map\\|ontroller\\)\\|i\\(?:nterface\\|p vrf\\)\\|line\\|policy-map\\|r\\(?:edundancy\\|oute\\(?:-map\\|r\\)\\)\\)\\>". cisco-router-toplevel-face)
-   '( "\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>" . cisco-router-command-face)
-   '("\\<\\(no\\|shutdown\\)\\>" . cisco-router-no-face)
-   '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>" . cisco-router-ipadd-face)
-   '("\\<\\([a-zA-Z]*Ethernet[0-9]+/[0-9]+/[0-9]+\\|[a-zA-Z]*Ethernet\\([0-9]+\\S+[0-9]+\\)+\\|[a-zA-Z]*Ethernet[0-9]+\\|Vlan[0-9]+\\|vlan [0-9]+\\|ae[0-9]\\S+[0-9]+\\|ae[0-9]+\\|Loopback[0-9]+\\|Tunnel[0-9]+\\|Port-Channel[0-9]+\\|ethernet\\([0-9]+\\S+\\)+\\)\\|Vxlan[0-9]+\\|ethernet[0-9]+\\S+[0-9]+\\>" . cisco-router-interface-face)
-  ;; '("\\<\\(Vlan[0-9]+\\|ae[0-9]\\S+[0-9]+\\|ae[0-9]+\\|Loopback[0-9]+\\|Tunnel[0-9]+\\|Port-Channel[0-9]+\\|[a-zA-Z]+thernet\\([0-9]+\\S+\\)+\\>" . cisco-router-interface-face)
-  )
-  "Font locking definitions for cisco router mode")
-;; a-zA-Z]*Ethernet\\([0-9]+\\S+[0-9]+\\)+\\
-
-;; Imenu definitions. 
-;; Not sure what this is doing.
-(defvar cisco-router-imenu-expression
-  '(
-    ("Interfaces"        "^[\t ]*interface *\\(.*\\)" 1)
-    ("VRFs"              "^ip vrf *\\(.*\\)" 1)
-    ("Controllers"       "^[\t ]*controller *\\(.*\\)" 1)
-    ("Routing protocols" "^router *\\(.*\\)" 1)
-    ("Class maps"        "^class-map *\\(.*\\)" 1)
-    ("Policy maps"       "^policy-map *\\(.*\\)" 1)
-    ))
-  
-;; Indentation definitions.
-;; This part seems good. I don't think I will make any changes here.
-(defun cisco-router-indent-line ()
-  "Indent current line as cisco router config line"
-  (let ((indent0 "^interface\\|redundancy\\|^line\\|^ip vrf \\|^controller\\|^class-map\\|^policy-map\\|router\\|access-list\\|route-map")
-	(indent1 " *main-cpu\\| *class\\W"))
-    (beginning-of-line)
-    (let ((not-indented t)
-	  (cur-indent 0))
-      (cond ((or (bobp) (looking-at indent0) (looking-at "!")) ; Handles the indent0 and indent1 lines
-;	     (message "Indent0")
-	     (setq not-indented nil
-		   cur-indent 0))
-	    ((looking-at indent1)
-;	     (message "Indent1")
-	     (setq not-indented nil
-		   cur-indent 1)))
-      (save-excursion ; Indents regular lines depending on the block they're in.
-	(while not-indented
-	  (forward-line -1)
-	  (cond ((looking-at indent1)
-;		 (message "Indent1 block")
-		 (setq cur-indent 2
-		       not-indented nil))
-		((looking-at indent0)
-;		 (message "Indent0 block")
-		 (setq cur-indent 1
-		       not-indented nil))
-		((looking-at "!")
-;		 (message "Reached !")
-		 (setq cur-indent 0
-		       not-indented nil))
-		((bobp) 
-;		 (message "Buffer beginning reached")
-		 (setq cur-indent 0
-		       not-indented nil)))))
-      (indent-line-to cur-indent))))
-
-
-;; Custom syntax table
-(defvar cisco-router-mode-syntax-table (make-syntax-table) 
-  "Syntax table for cisco router mode")
-
-(modify-syntax-entry ?_ "w" cisco-router-mode-syntax-table) ;All _'s are part of words. 
-(modify-syntax-entry ?- "w" cisco-router-mode-syntax-table) ;All -'s are part of words. 
-(modify-syntax-entry ?! "<" cisco-router-mode-syntax-table) ;All !'s start comments. 
-(modify-syntax-entry ?\n ">" cisco-router-mode-syntax-table) ;All newlines end comments.
-(modify-syntax-entry ?\r ">" cisco-router-mode-syntax-table) ;All linefeeds end comments.
-
-;; Entry point
-(defun cisco-router-mode  ()
-  "Major mode for editing Cisco router configuration files"
-  (interactive)
-  (kill-all-local-variables)
-  (set-syntax-table cisco-router-mode-syntax-table)
-  (use-local-map cisco-router-mode-map)
-  (set (make-local-variable 'font-lock-defaults) '(cisco-router-font-lock-keywords))
-  (set (make-local-variable 'indent-line-function) 'cisco-router-indent-line)
-  (set (make-local-variable 'comment-start) "!")
-  (set (make-local-variable 'comment-start-skip) "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)!+ *")
-  (setq imenu-case-fold-search nil)  
-  (set (make-local-variable 'imenu-generic-expression) cisco-router-imenu-expression)
-  (imenu-add-to-menubar "Imenu")
-  (setq major-mode 'cisco-router-mode
-	mode-name "Cisco IOS configuration")
-  (run-hooks cisco-router-mode-hook))
-
-(add-to-list 'auto-mode-alist '("\\.cfg\\'" . cisco-router-mode))
-
-(provide 'cisco-router-mode)
-
-;;; cisco-router-mode.el ends here
+(provide 'cisco-config-mode)
+;;; cisco-config-mode.el ends here

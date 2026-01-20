@@ -73,7 +73,7 @@
    '("\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\|timestamps\\|domain-name\\|name\\|description\\|)\\)\\>"
      . cisco-router-command-face)
    ;; “no” and “shutdown”
-   '("\\<\\(no\\|shutdown\\|down\\|trunk)\\>" . cisco-router-no-face)
+   '("\\<\\(no\\|shutdown\\|down\\|trunk\\|notconnect\\)\\>" . cisco-router-no-face)
    ;; “up” and “connected”
    '("\\<\\(up\\|connected\\)\\>" . cisco-router-up-face)
    ;; IPv4 addresses

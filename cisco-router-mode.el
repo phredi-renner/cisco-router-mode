@@ -49,6 +49,17 @@
     (t                              (:underline t)))
   "Face for \"up\" and related positive.")
 
+(defface cisco-router-lb-face
+    '((((type tty) (class color))     (:foreground "lightslateblue"))
+    (((type graphic) (class color)) (:foreground "lightslateblue"))
+    (t                              (:foreground "lightslateblue")))
+  "Face for \"descripiton\" and related positive.")
+
+(defface cisco-router-st-face
+    '((((type tty) (class color))     (:foreground "deepskyblue"))
+    (((type graphic) (class color)) (:foreground "deepskyblue"))
+    (t                              (:foreground "deepskyblue")))
+  "Face for \"spanning-tree\" and related")
 (defface cisco-router-interface-face
   '((((type tty) (class color))     (:foreground "orange"))
     (((type graphic) (class color)) (:foreground "orange"))
@@ -60,6 +71,8 @@
 (defvar cisco-router-toplevel-face 'cisco-router-toplevel-face)
 (defvar cisco-router-no-face 'cisco-router-no-face)
 (defvar cisco-router-up-face 'cisco-router-up-face)
+(defvar cisco-router-lb-face 'cisco-router-lb-face)
+(defvar cisco-router-st-face 'cisco-router-st-face)
 (defvar cisco-router-interface-face 'cisco-router-interface-face)
 
 ;;;; Font-lock
@@ -70,12 +83,16 @@
    '("\\<\\(access-list\\|c\\(?:lass-map\\|ontroller\\)\\|i\\(?:nterface\\|p vrf\\)\\|line\\|policy-map\\|r\\(?:edundancy\\|oute\\(?:-map\\|r\\)\\)\\)\\>"
      . cisco-router-toplevel-face)
    ;; Global commands
-   '("\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\|timestamps\\|domain-name\\|name\\|description\\|)\\)\\>"
+   '("\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>"
      . cisco-router-command-face)
    ;; “no” and “shutdown”
    '("\\<\\(no\\|shutdown\\|down\\|trunk\\|notconnect\\)\\>" . cisco-router-no-face)
    ;; “up” and “connected”
    '("\\<\\(up\\|connected\\)\\>" . cisco-router-up-face)
+   ;; “descripiton"
+   '("\\<\\(description\\)\\>" . cisco-router-lb-face)
+   ;; “spannin-tree"
+   '("\\<\\(spanning-tree\\)\\>" . cisco-router-st-face)
    ;; IPv4 addresses
    '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>"
      . cisco-router-ipadd-face)

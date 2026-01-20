@@ -70,12 +70,12 @@
    '("\\<\\(access-list\\|c\\(?:lass-map\\|ontroller\\)\\|i\\(?:nterface\\|p vrf\\)\\|line\\|policy-map\\|r\\(?:edundancy\\|oute\\(?:-map\\|r\\)\\)\\)\\>"
      . cisco-router-toplevel-face)
    ;; Global commands
-   '("\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\|timestamps\\|domain-name\\|name\\|description\\|)\\)\\>"
+   '("\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>"
      . cisco-router-command-face)
    ;; “no” and “shutdown”
-   '("\\<\\(no\\|shutdown\\|down\\|trunk)\\>" . cisco-router-no-face)
+   '("\\<\\(no\\|shutdown\\|down\\)\\>" . cisco-router-no-face)
    ;; “up” and “connected”
-   '("\\<\\(up\\|connected\\|#\\)\\>" . cisco-router-up-face)
+   '("\\<\\(up\\|connected\\)\\>" . cisco-router-up-face)
    ;; IPv4 addresses
    '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>"
      . cisco-router-ipadd-face)

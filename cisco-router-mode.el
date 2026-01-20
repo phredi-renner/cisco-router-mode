@@ -44,6 +44,11 @@
     (t                              (:underline t)))
   "Face for \"no\" and related negations.")
 
+(defface cisco-router-up-face
+  '((((type graphic) (class color)) (:foreground "green"))
+    (t                              (:underline t)))
+  "Face for \"up\" and related positive.")
+
 (defface cisco-router-interface-face
   '((((type tty) (class color))     (:foreground "orange"))
     (((type graphic) (class color)) (:foreground "orange"))
@@ -54,6 +59,7 @@
 (defvar cisco-router-command-face 'cisco-router-command-face)
 (defvar cisco-router-toplevel-face 'cisco-router-toplevel-face)
 (defvar cisco-router-no-face 'cisco-router-no-face)
+(defvar cisco-router-up-face 'cisco-router-up-face)
 (defvar cisco-router-interface-face 'cisco-router-interface-face)
 
 ;;;; Font-lock
@@ -67,7 +73,9 @@
    '("\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>"
      . cisco-router-command-face)
    ;; “no” and “shutdown”
-   '("\\<\\(no\\|shutdown\\)\\>" . cisco-router-no-face)
+   '("\\<\\(no\\|shutdown\\|down\\)\\>" . cisco-router-no-face)
+   ;; “up” and “connected”
+   '("\\<\\(up\\|connected\\)\\>" . cisco-router-up-face)
    ;; IPv4 addresses
    '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>"
      . cisco-router-ipadd-face)

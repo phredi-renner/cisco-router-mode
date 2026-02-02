@@ -22,9 +22,9 @@
 ;;;; Faces
 
 (defface cisco-router-ipadd-face
-  '((((type tty) (class color))     (:foreground "yellow"))
-    (((type graphic) (class color)) (:foreground "LightGoldenrod"))
-    (t                              (:foreground "LightGoldenrod")))
+  '((((type tty) (class color))     (:foreground "green"))
+    (((type graphic) (class color)) (:foreground "green"))
+    (t                              (:foreground "green")))
   "Face for IP addresses.")
 
 (defface cisco-router-command-face 
@@ -50,21 +50,29 @@
   "Face for \"up\" and related positive.")
 
 (defface cisco-router-lb-face
-    '((((type tty) (class color))     (:foreground "lightslateblue"))
-    (((type graphic) (class color)) (:foreground "lightslateblue"))
-    (t                              (:foreground "lightslateblue")))
+    '((((type tty) (class color))     (:foreground "LightGreen"))
+      (((type graphic) (class color)) (:foreground "LightGreen"))
+    (t                              (:foreground "LightGreen")))
   "Face for \"descripiton\" and related positive.")
 
 (defface cisco-router-st-face
-    '((((type tty) (class color))     (:foreground "deepskyblue"))
-    (((type graphic) (class color)) (:foreground "deepskyblue"))
-    (t                              (:foreground "deepskyblue")))
+    '((((type tty) (class color))     (:foreground "skyblue"))
+    (((type graphic) (class color)) (:foreground "skyblue"))
+    (t                              (:foreground "skyblue")))
   "Face for \"spanning-tree\" and related")
+
 (defface cisco-router-interface-face
   '((((type tty) (class color))     (:foreground "orange"))
     (((type graphic) (class color)) (:foreground "orange"))
     (t                              (:foreground "orange")))
   "Face for interface names.")
+
+(defface cisco-router-golden-face
+  '((((type tty) (class color))     (:foreground "gold1"))
+    (((type graphic) (class color)) (:foreground "gold1"))
+    (t                              (:foreground "gold1")))
+  "Face for IP addresses.")
+
 
 (defvar cisco-router-ipadd-face 'cisco-router-ipadd-face)
 (defvar cisco-router-command-face 'cisco-router-command-face)
@@ -74,6 +82,7 @@
 (defvar cisco-router-lb-face 'cisco-router-lb-face)
 (defvar cisco-router-st-face 'cisco-router-st-face)
 (defvar cisco-router-interface-face 'cisco-router-interface-face)
+(defvar cisco-router-golden-face 'cisco-router-golden-face)
 
 ;;;; Font-lock
 
@@ -86,20 +95,24 @@
    '("\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>"
      . cisco-router-command-face)
    ;; “no” and “shutdown”
-   '("\\<\\(no\\|shutdown\\|down\\|trunk\\|notconnect\\)\\>" . cisco-router-no-face)
+   '("\\<\\(no\\|shutdown\\|down\\|trunk\\|notconnect\\|err-disable\\)\\>" . cisco-router-no-face)
    ;; “up” and “connected”
-   '("\\<\\(up\\|connected\\)\\>" . cisco-router-up-face)
+   '("\\<\\(up\\|connected\\|yes\\|permit\\|enabled\\|Building\\|Current\\|configuration\\)\\>" . cisco-router-up-face)
    ;; “descripiton"
-   '("\\<\\(description\\)\\>" . cisco-router-lb-face)
+   '("\\<\\(description\\|Port\\|Name\\|Status\\|Vlan\\|Duplex\\|Speed\\|Type\\|Mac Address\\|Ports\\|Table\\|ip address\\|-\\{2,\\}\\)\\>" . cisco-router-lb-face)
    ;; “spannin-tree"
-   '("\\<\\(spanning-tree\\)\\>" . cisco-router-st-face)
+   '("\\<\\(spanning-tree\\|switchport\\)\\>" . cisco-router-st-face)
    ;; IPv4 addresses
    '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>"
      . cisco-router-ipadd-face)
+   ;; Mac Address
+   '("\\<\\([0-9A-Fa-f]\\{4\\}.[0-9A-Fa-f]\\{4\\}.[0-9A-Fa-f]\\{4\\}\\|username\\|password\\)\\>" . cisco-router-golden-face)
    ;; Interface names (Ethernet, Vlan, ae, Loopback, etc.)
-   '("\\<\\([a-zA-Z]*Ethernet[0-9]+/[0-9]+/[0-9]+\\|[a-zA-Z]*Ethernet\\([0-9]+\\S+[0-9]+\\)+\\|[a-zA-Z]*Ethernet[0-9]+\\|Vlan[0-9]+\\|vlan [0-9]+\\|ae[0-9]\\S+[0-9]+\\|ae[0-9]+\\|Loopback[0-9]+\\|Tunnel[0-9]+\\|Port-Channel[0-9]+\\|ethernet\\([0-9]+\\S+\\)+\\)\\|Vxlan[0-9]+\\|ethernet[0-9]+\\S+[0-9]+\\>"
+   '("\\<\\([a-zA-Z]+[0-9]+/[0-9]+\\|[\\|[a-zA-Z]*Ethernet[0-9]+/[0-9]+/[0-9]+\\|[a-zA-Z]*Ethernet\\([0-9]+\\S+[0-9]+\\)+\\|[a-zA-Z]*Ethernet[0-9]+\\|Vlan[0-9]+\\|vlan [0-9]+\\|ae[0-9]\\S+[0-9]+\\|ae[0-9]+\\|Loopback[0-9]+\\|Tunnel[0-9]+\\|Port-Channel[0-9]+\\|ethernet\\([0-9]+\\S+\\)+\\)\\|Vxlan[0-9]+\\|ethernet[0-9]+\\S+[0-9]+\\|con\\|vty\\>"
      . cisco-router-interface-face))
+
   "Font-lock rules for `cisco-router-mode'.")
+
 
 ;;;; Imenu
 

@@ -7,6 +7,8 @@ I'm going to see if I can create color coding for router/switch configuraiton fi
 
 # 01/18/26 - Ran the code through Perplexity AI with the prompt, "update for EMACS 30", it came back with the below and following recommendations: "For Emacs 30, the main things to update are: use define-derived-mode, make the faces real defface symbols, and set font-lock-defaults with setq-local (or as a defvar-local). The regexps and faces themselves still work." Looking to see what the differences are and understand them.
 
+# 2/1/26 - Revised colors and added regex for additional commands
+
 # My Goals
  - learn more about using EMACS and eLISP
  - Router, Switch and Firewall configuration highlighting (multi-vendor)

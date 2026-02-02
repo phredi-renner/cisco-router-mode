@@ -3,9 +3,7 @@ Major mode for editing network device configuration files.
 
 I'm going to see if I can create color coding for router/switch configuraiton files as I'm learning to use EMACS.
 
-# 10/25/25 - I just updated to emacs 30 and this doesn't seem to work correctly.
-
-# 01/18/26 - Ran the code through Perplexity AI with the prompt, "update for EMACS 30", it came back with the below and following recommendations: "For Emacs 30, the main things to update are: use define-derived-mode, make the faces real defface symbols, and set font-lock-defaults with setq-local (or as a defvar-local). The regexps and faces themselves still work." Looking to see what the differences are and understand them.
+# My original version stopped woking with Emacs 30. with the help of some AI, made some tweaks and changes to get it working again.
 
 # 2/1/26 - Revised colors and added regex for additional commands
 

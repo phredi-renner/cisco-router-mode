@@ -92,7 +92,7 @@
    '("\\<\\(access-list\\|c\\(?:lass-map\\|ontroller\\)\\|i\\(?:nterface\\|p vrf\\)\\|line\\|policy-map\\|r\\(?:edundancy\\|oute\\(?:-map\\|r\\)\\)\\)\\>"
      . cisco-router-toplevel-face)
    ;; Global commands
-   '("\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\)\\>"
+   '("\\<\\(alias\\|boot\\|card\\|diagnostic\\|^enable\\|hostname\\|logging\\|radius-server\\|s\\(?:ervice\\|nmp-server\\)\\|v\\(?:ersion\\|tp\\)\\|ip http\\|ntp server\\)\\>"
      . cisco-router-command-face)
    ;; “no” and “shutdown”
    '("\\<\\(no\\|shutdown\\|down\\|trunk\\|notconnect\\|err-disable\\)\\>" . cisco-router-no-face)
@@ -101,7 +101,7 @@
    ;; “descripiton"
    '("\\<\\(description\\|Port\\|Name\\|Status\\|Vlan\\|Duplex\\|Speed\\|Type\\|Mac Address\\|Ports\\|Table\\|ip address\\|-\\{2,\\}\\)\\>" . cisco-router-lb-face)
    ;; “spannin-tree"
-   '("\\<\\(spanning-tree\\|switchport\\)\\>" . cisco-router-st-face)
+   '("\\<\\(spanning-tree\\|switchport\\|community\\|location\\|facility\\|trap\\|host\\)\\>" . cisco-router-st-face)
    ;; IPv4 addresses
    '("\\<\\([0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\\}\\)\\>"
      . cisco-router-ipadd-face)
